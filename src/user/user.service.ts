@@ -46,9 +46,9 @@ export class UserService {
     }
 
     async remove(username: string){
-        const deletedUser = await this.userModel.deleteOne({username : username});
+        const result = await this.userModel.deleteOne({username : username});
 
-        if(!deletedUser){
+        if(result.deletedCount === 0){
             throw new NotFoundException(`User with username: ${username} is not found.`)
         }
     }
