@@ -19,10 +19,10 @@ export class UserController {
         }
     }
 
-    @Get(':id')
-    async findOneUser(@Param('id') id: string){
+    @Get(':username')
+    async findOneUser(@Param('username') username: string){
         try{
-            return this.useService.findOneUser(+id);
+            return this.useService.findOneUser(username);
         }catch(error){
             throw new HttpException(error.message, error.status);
         }
@@ -32,12 +32,19 @@ export class UserController {
     @Post()
     async create(@Body() createUserDto : CreateUserDto){
         try{
+            return this.useService.create(createUserDto);  
+        }catch(error){
+            throw new HttpException(error.message, error.status);
+        } 
+    }
 
-            return this.useService.create(createUserDto);
-            
+    @Delete(':username')
+     async remove(@Param('username')  username: string){
+        try{
+            return this.useService.remove(username);
         }catch(error){
             throw new HttpException(error.message, error.status);
         }
-        
-    }
+     }
+
 }

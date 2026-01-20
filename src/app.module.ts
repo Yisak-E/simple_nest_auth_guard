@@ -14,8 +14,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: (configService: ConfigService) => ({
         uri: configService.get<string>('MONGO_CONNECTION_URI'),
         dbName: configService.get<string>('DB_NAME'),
+        authSource: configService.get<string>('AUTH_SOURCE'),
+        user: configService.get<string>('MONGO_USER'),
+        pass: configService.get<string>('MONGO_PASS'),
 
       }),
+      inject: [ConfigService]
 
     }),
     UserModule,

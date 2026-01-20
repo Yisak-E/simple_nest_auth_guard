@@ -1,21 +1,9 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/schema.user';
 
-const userDatas = [
-    {
-        name:"yisak",
-        email:"yis@gmail.com",
-        password: "simple password"
-    },
-    {
-        name:"Metaferiya",
-        email:"metaf@gmail.com",
-        password: "pass"
-    }
-]
 
 @Injectable()
 export class UserService {
@@ -25,10 +13,20 @@ export class UserService {
     ){}
 
     async findAllUser(){
-        return userDatas;
+        const userDocuments = await this.userModel.find();
+    
+        if(userDocuments.length === 0){
+            throw new NotFoundException("No users in the database");
+        }
+
+        return userDocuments;
     }
-    async findOneUser(id: number){
-        return userDatas[id];
+    async findOneUser(username: string){
+       const userDocument = await this.userModel.findOne({username: username});
+
+       if(!userDocument){
+        throw new NotFoundException(`User with username: ${username} not found`);
+       }
     }
 
     async create(createUserDto: CreateUserDto){
@@ -45,5 +43,13 @@ export class UserService {
         }
 
         return userCreated;
+    }
+
+    async remove(username: string){
+        const deletedUser = await this.userModel.deleteOne({username : username});
+
+        if(!deletedUser){
+            throw new NotFoundException(`User with username: ${username} is not found.`)
+        }
     }
 }
