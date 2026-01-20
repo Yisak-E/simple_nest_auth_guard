@@ -27,6 +27,8 @@ export class UserService {
        if(!userDocument){
         throw new NotFoundException(`User with username: ${username} not found`);
        }
+
+       return userDocument;
     }
 
     async create(createUserDto: CreateUserDto){
