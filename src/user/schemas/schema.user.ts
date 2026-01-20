@@ -21,7 +21,7 @@ export type UserDocument = HydratedDocument<User>;
 
 // schema
 @Schema({
-    collection: 'user',
+    collection: 'users',
     timestamps: {
         createdAt: 'created_at',
         updatedAt: 'updated_at',
@@ -44,4 +44,4 @@ export class User{
 
 }
 
-export const UserSchema = SchemaFactory.createForClass(User)
+export const UserSchema  = SchemaFactory.createForClass(User)
