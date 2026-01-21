@@ -21,11 +21,11 @@ export class UserService {
 
         return userDocuments;
     }
-    async findOneUser(username: string){
-       const userDocument = await this.userModel.findOne({username: username});
+    async findOneUser(email: string){
+       const userDocument = await this.userModel.findOne({email: email});
 
        if(!userDocument){
-        throw new NotFoundException(`User with username: ${username} not found`);
+        throw new NotFoundException(`User with email: ${email} not found`);
        }
 
        return userDocument;

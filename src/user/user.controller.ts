@@ -19,10 +19,10 @@ export class UserController {
         }
     }
 
-    @Get(':username')
-    async findOneUser(@Param('username') username: string){
+    @Get(':email')
+    async findOneUser(@Param('email') email: string){
         try{
-            return this.useService.findOneUser(username);
+            return this.useService.findOneUser(email);
         }catch(error){
             throw new HttpException(error.message, error.status);
         }
