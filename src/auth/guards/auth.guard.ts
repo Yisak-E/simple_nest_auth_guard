@@ -5,20 +5,20 @@ import { IS_PUBLIC_KEY } from "../decorators/public.decorator";
 
 
 @Injectable()
-export class AuthGuard implements CanActivate{
+export class AuthGuard implements CanActivate {
     constructor(
         private readonly authService: AuthService,
         private reflector: Reflector,
-    ){}
-
-    async canActivate(context: ExecutionContext):|Promise<boolean> {
+    ) {}
+ 
+    async canActivate(context: ExecutionContext): Promise<boolean> {
         // Read metadata and if isPublic decorator is used, set isPublic to true
         const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
             context.getHandler(),
             context.getClass(),
         ]);
 
-        if (isPublic){
+        if (isPublic) {
             return true;
         }
 
